@@ -3,23 +3,14 @@ import Hash "mo:base/Hash";
 import Nat "mo:base/Nat";
 import Iter "mo:base/Iter";
 import Text "mo:base/Text";
+import Types "Types";
+import Utils "Utils";
 
-actor asistan {
-
-  type ToDo = {
-    description: Text;
-    completed: Bool;
-  };
-
-  func natHash(n: Nat): Hash.Hash {
-    Text.hash(Nat.toText(n))
-  };
-
-  var todos = Map.HashMap<Nat, ToDo>(0, Nat.equal, natHash);
+actor Asistan {
+  var todos = Map.HashMap<Nat, Types.ToDo>(0, Nat.equal, Utils.natHash);
   var nextId: Nat = 0;
 
-  // query metodu
-  public query func getTodos(): async [ToDo] {
+  public query func getTodos(): async [Types.ToDo] {
     Iter.toArray(todos.vals())
   };
 
@@ -47,5 +38,4 @@ actor asistan {
     };
     output # "\n"
   };
-
 };
